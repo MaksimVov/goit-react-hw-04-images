@@ -4,7 +4,7 @@ import { ImageGallery } from './imageGallery/ImageGallery';
 import { Searchbar } from './searchbar/Searchbar';
 import { getImages } from 'services/getImages';
 import { Button } from './button/Button';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 export const App = () => {
   const [images, setImages] = useState([]);
@@ -12,8 +12,6 @@ export const App = () => {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [showBtn, setShowBtn] = useState(false);
-
-  const prevStateRef = useRef(null);
 
   const handleFormSubmit = async search => {
     setImages([]);
