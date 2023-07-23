@@ -7,13 +7,10 @@ import { Button } from './button/Button';
 import { useState, useEffect, useRef } from 'react';
 
 export const App = () => {
-
-
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const [isEmpty, setIsEmpty] = useState(false);
   const [showBtn, setShowBtn] = useState(false);
 
   const prevStateRef = useRef(null);
@@ -21,7 +18,6 @@ export const App = () => {
   const handleFormSubmit = async search => {
     setImages([]);
     setSearch(search);
-    setIsEmpty(false);
     setShowBtn(false);
     setPage(1);
     setIsLoading(false);
@@ -38,7 +34,6 @@ export const App = () => {
       getImages(search, page)
         .then(({ hits: photos, totalHits: total_results }) => {
           if (photos.length === 0) {
-            setIsEmpty(true);
             Notiflix.Notify.failure(
               `❌ Sorry, there ${search}  are no images matching your search query. Please try again.`
             );
