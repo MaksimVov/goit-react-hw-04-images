@@ -24,33 +24,28 @@ export const App = () => {
   };
 
   useEffect(() => {
-    if (
-      prevStateRef.current &&
-      (prevStateRef.current.search !== search ||
-        prevStateRef.current.page !== page)
-    ) {
-      setIsLoading(true);
-
-      getImages(search, page)
-        .then(({ hits: photos, totalHits: total_results }) => {
-          if (photos.length === 0) {
-            Notiflix.Notify.failure(
-              `❌ Sorry, there ${search}  are no images matching your search query. Please try again.`
-            );
-            return;
-          }
-          setImages(prevImages => [...prevImages, ...photos]);
-          setShowBtn(page < Math.ceil(total_results / 12));
-        })
-        .catch(error => {
-          Notiflix.Notify.failure(`❌ ${error.message}`);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+    if (!search) {
+      return;
     }
+    setIsLoading(true);
 
-    prevStateRef.current = { search, page };
+    getImages(search, page)
+      .then(({ hits: photos, totalHits: total_results }) => {
+        if (photos.length === 0) {
+          Notiflix.Notify.failure(
+            `❌ Sorry, there ${search}  are no images matching your search query. Please try again.`
+          );
+          return;
+        }
+        setImages(prevImages => [...prevImages, ...photos]);
+        setShowBtn(page < Math.ceil(total_results / 12));
+      })
+      .catch(error => {
+        Notiflix.Notify.failure(`❌ ${error.message}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [search, page]);
 
   const handleClick = () => setPage(page => page + 1);

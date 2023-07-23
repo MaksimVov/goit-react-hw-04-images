@@ -8,19 +8,19 @@ export const Modal = ({ imageUrl, closeModal, handleCloseModal }) => {
     }
   };
 
-  const handleKeyPress = e => {
-    if (e.key === 'Escape') {
-      handleCloseModal();
-    }
-  };
-
   useEffect(() => {
+    const handleKeyPress = e => {
+      if (e.key === 'Escape') {
+        handleCloseModal();
+      }
+    };
+
     window.addEventListener('keydown', handleKeyPress);
 
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  });
+  }, [closeModal]);
 
   return (
     <div className={styles.overlay} onClick={handleClick}>
